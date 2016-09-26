@@ -1,0 +1,22 @@
+{
+    "name": "pcrov/unicode",
+    "homepage": "https://github.com/pcrov/unicode",
+    "description": "Miscellaneous Unicode utility functions",
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "Paul Crovella",
+            "role": "developer"
+        }
+    ],
+    "require": {
+        "php": "^7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.2"
+    },
+    "autoload": {
+        "files": ["src/functions.php"]
+    }
+}
