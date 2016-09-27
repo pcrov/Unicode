@@ -28,6 +28,11 @@ for ($i = 0; $i < $length; $i++) {
         throw new \Exception("Unexpected byte " . bin2hex($byte) . " at position $i");
     }
 }
+
+// Make sure we've made it back to the beginning.
+if (!isset($map["\x0"])) {
+    throw new \Exception("Unexpected end of sequence.");
+}
 ```
 
 ### `utf8_char_byte_map() : array`
