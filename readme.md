@@ -22,7 +22,7 @@ handling.
 ## Data
 The data directory holds two files containing all possible UTF-8 encoded characters.
 One as plain text, the other as json. These are not included in packaged stable
-releases but can be generated with `pcrov\Unicode\utf8_generate_all()` (returns the
+releases but can be generated with `pcrov\Unicode\Utf8::getAllCharacters()` (returns the
 plain text string.)
 
 ## Functions
