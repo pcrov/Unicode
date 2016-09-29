@@ -13,10 +13,22 @@
     "require": {
         "php": "^7.0"
     },
+    "suggest": {
+        "ext-pcre": "Fast driver for some operations, particularly when compiled with Unicode property support and jit is enabled.",
+        "ext-iconv": "Fast driver for some operations.",
+        "ext-mbstring": "Quick driver for some operations."
+    },
     "require-dev": {
         "phpunit/phpunit": "^5.2"
     },
     "autoload": {
-        "files": ["src/functions.php"]
+        "psr-4": {
+            "pcrov\\Unicode\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "pcrov\\Unicode\\": "test/"
+        }
     }
 }

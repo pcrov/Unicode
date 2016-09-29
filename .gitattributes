@@ -1,4 +1,5 @@
 /data/* binary
+/test/data/* binary
 * text=auto
 * text eol=lf
 /test               export-ignore
