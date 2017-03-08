@@ -1,6 +1,5 @@
 .idea/
 vendor/
-doc/
+phpunit.xml
 composer.lock
 scratchpad.php
-phpdoc.dist.xml

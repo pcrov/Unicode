@@ -1,67 +1,65 @@
-# Unicode (Work in progress)
+# Unicode
 
 [![Build Status](https://travis-ci.org/pcrov/Unicode.svg?branch=master)](https://travis-ci.org/pcrov/Unicode)
 [![Coverage Status](https://coveralls.io/repos/github/pcrov/Unicode/badge.svg?branch=master)](https://coveralls.io/github/pcrov/Unicode?branch=master)
 [![License](https://poser.pugx.org/pcrov/unicode/license)](https://github.com/pcrov/Unicode/blob/master/LICENSE)
 [![Latest Stable Version](https://poser.pugx.org/pcrov/unicode/v/stable)](https://packagist.org/packages/pcrov/unicode)
 
-Miscellaneous Unicode utility functions. No PHP extensions are required though they are encouraged.
-
-## Drivers
-Various drivers are used depending on the function and which extensions are available. The one chosen should be sane,
-even for very large strings (when applicable), though might not be optimal in all cases.
-
-If you have stricter performance requirements you should be testing and building something tailored to what you're
-handling.
-
-- Native - plain old PHP. Always available for all functions.
-- PCRE - built with Unicode support or without. Preferably with. Preferably with jit enabled.
-- iconv - an oldie but goodie.
-- mbstring - it's mbstring.
-
-## Data
-The data directory holds two files containing all possible UTF-8 encoded characters.
-One as plain text, the other as json. These are not included in packaged stable
-releases but can be generated with `pcrov\Unicode\Utf8::getAllCharacters()` (returns the
-plain text string.)
+Miscellaneous Unicode utility functions.
 
 ## Functions
-TODO: document everything
 
 Namespace `pcrov\Unicode`.
 
-### `Utf8::getByteMap() : array`
-Provides a recursive array letting you walk a (potentially endless) UTF-8
+### `surrogate_pair_to_code_point(int $high, int $low): int`
+Translates a UTF-16 surrogate pair into a single code point. [Wikipedia's UTF-16 article][0]
+explains what this is fairly well.
+
+### `utf8_find_invalid_byte_sequence(string $string): ?string`
+Returns the position of the first invalid byte sequence or null if the input is valid.
+
+### `utf8_generate_all_code_points(): string`
+Returns a string containing every possible valid UTF-8 encoded code point.
+All 1,112,064 of them.
+
+### `utf8_get_invalid_byte_sequence(string $string): ?string`
+Returns the first invalid byte sequence or null if the string is valid UTF-8.
+
+### `utf8_get_state_machine(): array`
+Provides an infinite state machine letting you walk a (potentially endless) UTF-8
 sequence byte by byte.
 
-The map is in the form of `[byte => [next possible byte => ...,], ...]`
+It is in the form of `[byte => [valid next byte => ...,], ...]`
 
 Example (validation):
 ```php
-$map = Utf8::getByteMap();
+$machine = utf8_get_state_machine();
 $length = \strlen($input);
 for ($i = 0; $i < $length; $i++) {
     $byte = $input[$i];
-    if (isset($map[$byte])) {
-        $map = $map[$byte];
+    if (isset($machine[$byte])) {
+        $machine = $machine[$byte];
     } else {
-        throw new \Exception("Unexpected byte " . bin2hex($byte) . " at position $i");
+        throw new \Exception("Unexpected byte " . \bin2hex($byte) . " at position $i");
     }
 }
 
-// Make sure we've made it back to the beginning.
-if (!isset($map["\x0"])) {
+// If you haven't made it back to the beginning the character being scanned isn't complete.
+if (!isset($machine["\x0"])) {
     throw new \Exception("Unexpected end of sequence.");
 }
 ```
 
-### `Utf8::getAllCharacters() : string`
-Returns a string containing every possible valid UTF-8 encoded codepoint.
-All 1,112,064 of them.
+### `utf8_validate(string $string): bool`
+Does what it says on the box.
 
-Runs surprisingly quick as long as Xdebug isn't loaded.
+## Data
+The test/data directory holds two files containing all possible UTF-8 encoded characters.
+One as plain text, the other as json. These are not included in packaged stable
+releases but can be generated with `utf8_generate_all_code_points()` (returns the
+plain text string.)
 
-## Excerpts from the [Unicode 9.0.0 standard][1]:
+## Excerpts from the [Unicode 10.0.0 standard][1]:
 Recreated here for ease of reference. Nobody likes PDFs.
 
 ### Table 3-6. UTF-8 Bit Distribution
@@ -87,4 +85,5 @@ Recreated here for ease of reference. Nobody likes PDFs.
 | U+40000..U+FFFFF   | F1..F3     | 80..BF      | 80..BF     | 80..BF      |
 | U+100000..U+10FFFF | F4         | 80.._**8F**_| 80..BF     | 80..BF      |
 
-[1]: http://www.unicode.org/versions/Unicode9.0.0/ch03.pdf#page=54
+[0]: https://en.wikipedia.org/wiki/UTF-16#U.2B10000_to_U.2B10FFFF
+[1]: http://www.unicode.org/versions/Unicode10.0.0/ch03.pdf#page=55
