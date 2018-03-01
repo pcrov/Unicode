@@ -60,28 +60,6 @@ REGEX;
 }
 
 /**
- * @return string Every possible UTF-8 encoded code point.
- */
-function utf8_generate_all_code_points(): string
-{
-    $generator = function (array $machine, string $buffer = "") use (&$generator) {
-        // Completed a UTF-8 encoded code point.
-        if ($buffer !== "" && isset($machine["\x0"])) {
-            return $buffer;
-        }
-
-        $out = "";
-        foreach ($machine as $byte => $next) {
-            $out .= $generator($next, $buffer . $byte);
-        }
-
-        return $out;
-    };
-
-    return $generator(utf8_get_state_machine());
-}
-
-/**
  * @return string|null The first invalid byte sequence or null if the string is valid UTF-8.
  */
 function utf8_get_invalid_byte_sequence(string $string)

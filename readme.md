@@ -18,10 +18,6 @@ explains what this is fairly well.
 ### `utf8_find_invalid_byte_sequence(string $string): ?string`
 Returns the position of the first invalid byte sequence or null if the input is valid.
 
-### `utf8_generate_all_code_points(): string`
-Returns a string containing every possible valid UTF-8 encoded code point.
-All 1,112,064 of them.
-
 ### `utf8_get_invalid_byte_sequence(string $string): ?string`
 Returns the first invalid byte sequence or null if the string is valid UTF-8.
 
@@ -31,22 +27,25 @@ sequence byte by byte.
 
 It is in the form of `[byte => [valid next byte => ...,], ...]`
 
-Example (validation):
+Example use:
 ```php
-$machine = utf8_get_state_machine();
-$length = \strlen($input);
-for ($i = 0; $i < $length; $i++) {
-    $byte = $input[$i];
-    if (isset($machine[$byte])) {
-        $machine = $machine[$byte];
-    } else {
-        throw new \Exception("Unexpected byte " . \bin2hex($byte) . " at position $i");
-    }
-}
+function utf8_generate_all_code_points(): string
+{
+    $generator = function (array $machine, string $buffer = "") use (&$generator) {
+        // Completed a UTF-8 encoded code point.
+        if ($buffer !== "" && isset($machine["\x0"])) {
+            return $buffer;
+        }
 
-// If you haven't made it back to the beginning the character being scanned isn't complete.
-if (!isset($machine["\x0"])) {
-    throw new \Exception("Unexpected end of sequence.");
+        $out = "";
+        foreach ($machine as $byte => $next) {
+            $out .= $generator($next, $buffer . $byte);
+        }
+
+        return $out;
+    };
+
+    return $generator(utf8_get_state_machine());
 }
 ```
 
@@ -55,9 +54,9 @@ Does what it says on the box.
 
 ## Data
 The test/data directory holds two files containing all possible UTF-8 encoded characters.
-One as plain text, the other as json. These are not included in packaged stable
-releases but can be generated with `utf8_generate_all_code_points()` (returns the
-plain text string.)
+All 1,112,064 of them. One as plain text, the other as json. These are not included in
+packaged stable releases but can be generated with the example `utf8_generate_all_code_points()`
+function above (returns the plain text string.)
 
 ## Excerpts from the [Unicode 10.0.0 standard][1]:
 Recreated here for ease of reference. Nobody likes PDFs.
