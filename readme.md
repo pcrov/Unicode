@@ -11,18 +11,18 @@ Miscellaneous Unicode utility functions.
 
 Namespace `pcrov\Unicode`.
 
-### `surrogate_pair_to_code_point(int $high, int $low): int`
+#### `surrogate_pair_to_code_point(int $high, int $low): int`
 Translates a UTF-16 surrogate pair into a single code point. [Wikipedia's UTF-16 article][0]
 explains what this is fairly well.
 
-### `utf8_find_invalid_byte_sequence(string $string): ?string`
+#### `utf8_find_invalid_byte_sequence(string $string): ?string`
 Returns the position of the first invalid byte sequence or null if the input is valid.
 
-### `utf8_get_invalid_byte_sequence(string $string): ?string`
-Returns the first invalid byte sequence or null if the string is valid UTF-8.
+#### `utf8_get_invalid_byte_sequence(string $string): ?string`
+Returns the first invalid byte sequence or null if the input is valid.
 
-### `utf8_get_state_machine(): array`
-Provides an infinite state machine letting you walk a (potentially endless) UTF-8
+#### `utf8_get_state_machine(): array`
+Provides a state machine letting you walk a (potentially endless) UTF-8
 sequence byte by byte.
 
 It is in the form of `[byte => [valid next byte => ...,], ...]`
@@ -49,7 +49,7 @@ function utf8_generate_all_code_points(): string
 }
 ```
 
-### `utf8_validate(string $string): bool`
+#### `utf8_validate(string $string): bool`
 Does what it says on the box.
 
 ## Data

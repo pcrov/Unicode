@@ -60,7 +60,7 @@ REGEX;
 }
 
 /**
- * @return string|null The first invalid byte sequence or null if the string is valid UTF-8.
+ * @return string|null The first invalid byte sequence or null if the input is valid.
  */
 function utf8_get_invalid_byte_sequence(string $string)
 {
@@ -102,7 +102,7 @@ function utf8_get_invalid_byte_sequence(string $string)
 }
 
 /**
- * @return array Infinite state machine of valid UTF-8 bytes in the form of:
+ * @return array State machine of valid UTF-8 bytes in the form of:
  *     [byte => [valid next byte => ...,], ...]
  */
 function utf8_get_state_machine(): array
