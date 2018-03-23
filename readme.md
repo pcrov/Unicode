@@ -15,7 +15,7 @@ Namespace `pcrov\Unicode`.
 Translates a UTF-16 surrogate pair into a single code point. [Wikipedia's UTF-16 article][0]
 explains what this is fairly well.
 
-#### `utf8_find_invalid_byte_sequence(string $string): ?string`
+#### `utf8_find_invalid_byte_sequence(string $string): ?int`
 Returns the position of the first invalid byte sequence or null if the input is valid.
 
 #### `utf8_get_invalid_byte_sequence(string $string): ?string`
