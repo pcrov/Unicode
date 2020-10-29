@@ -1,6 +1,6 @@
 # Unicode
 
-[![Build Status](https://travis-ci.org/pcrov/Unicode.svg?branch=master)](https://travis-ci.org/pcrov/Unicode)
+[![Build Status](https://api.travis-ci.com/pcrov/Unicode.svg?branch=master)](https://travis-ci.com/github/pcrov/Unicode)
 [![Coverage Status](https://coveralls.io/repos/github/pcrov/Unicode/badge.svg?branch=master)](https://coveralls.io/github/pcrov/Unicode?branch=master)
 [![License](https://poser.pugx.org/pcrov/unicode/license)](https://github.com/pcrov/Unicode/blob/master/LICENSE)
 [![Latest Stable Version](https://poser.pugx.org/pcrov/unicode/v/stable)](https://packagist.org/packages/pcrov/unicode)
