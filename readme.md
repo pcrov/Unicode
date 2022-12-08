@@ -1,7 +1,6 @@
 # Unicode
 
 [![CI Status](https://github.com/pcrov/Unicode/workflows/CI/badge.svg)](https://github.com/pcrov/Unicode/actions?query=workflow%3ACI)
-[![Coverage Status](https://coveralls.io/repos/github/pcrov/Unicode/badge.svg?branch=master)](https://coveralls.io/github/pcrov/Unicode?branch=master)
 [![License](https://poser.pugx.org/pcrov/unicode/license)](https://github.com/pcrov/Unicode/blob/master/LICENSE)
 [![Latest Stable Version](https://poser.pugx.org/pcrov/unicode/v/stable)](https://packagist.org/packages/pcrov/unicode)
 
